@@ -49,8 +49,8 @@ module.exports = (
   NODE_ENV = NODE_ENV.slice(0, 4)
 
   if (!cwd) cwd = PWD || __dirname
-  if (!etc) etc = join(cwd, 'etc')
-  if (!dirname) dirname = join(cwd, watch?.split(',')[0] || 'dist')
+  if (!etc) etc = cwd;
+  if (!dirname) dirname = cwd;
   if (!logging) logging = (/** @type {...any} */ ...a) => { NODE_ENV !== 'prod' && console.info(...a) }
 
   if (!server) server = Http.createServer((req, res) => {

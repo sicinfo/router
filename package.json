@@ -1,6 +1,6 @@
 {
   "name": "sicinfo-router",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "application loaders",
   "main": "src/index.js",
   "scripts": {
