@@ -1,0 +1,12 @@
+**/_*
+**/*_
+**/dist
+**/tmp
+**/*copy*
+**/*copia
+**/*copias
+
+/*/typings
+
+
+!/test/dist

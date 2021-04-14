@@ -1,0 +1,22 @@
+{
+  "name": "router",
+  "version": "1.0.0",
+  "description": "pm2 start loja ",
+  "interpreter": "node",
+  "max_restarts": 4,
+  "interpreter_args": "",
+  "cwd": "/home/user/var/work/router",
+  "script": "src/index.js",
+  "watch": ["dist", "src"],
+  "ignore_watch": [
+    "**/*.json",
+    "**/* copy*",
+    "**/node_modules",
+    "**/tmp/*"
+  ],
+  "env": {
+    "etc": "/home/user/var/work/etc",
+    "PORT": 3003,
+    "NODE_ENV": "development"
+  }
+}
