@@ -27,7 +27,12 @@ const { readFileSync, statSync } = require('fs');
 
 const Http = require('http');
 
-const { BadRequest, NotFound, InternalServerError, isHttpError } = require('http-errors');
+const { 
+  BadRequest, 
+  NotFound, 
+  InternalServerError, 
+  isHttpError 
+} = require('http-errors');
 
 /** @return {GateEnv} */
 module.exports = (
@@ -39,13 +44,13 @@ module.exports = (
     dirname = '',
     cfgs = {},
     PORT, PWD,
-    watch,
+    watch = "dist",
     server,
     test
   },
   /** @type { function } */ logging
 ) => {
-  
+
   NODE_ENV = NODE_ENV.slice(0, 4)
 
   if (!cwd) cwd = PWD || __dirname
@@ -63,31 +68,50 @@ module.exports = (
       if (!appname) return reject(new BadRequest('App undefined'));
       if (/\./.test(appname)) return res.writeHead(204).end();
       
-      const _dirname = join(dirname, `app-${appname}`);
+      const _dirname = join(dirname, watch.split(',')[0], `app-${appname}`);
       const appjson = join(etc, `app-${appname}.json`);
 
       if (!cfgs[appjson]) try {
 
         const stats = statSync(appjson);
-        if (!stats.isFile() || stats.size < 12) return reject(new BadRequest('App bad formatted'));
+        if (!stats.isFile() || stats.size < 12) {
+          return reject(new BadRequest('App bad formatted'))
+        }
 
         cfgs[appjson] = Reflect.get(JSON.parse(readFileSync(appjson, { encoding: 'utf8' })), 'main')
-        if (!cfgs[appjson]) return reject(new BadRequest('Main undefined'));
+        if (!cfgs[appjson]) {
+          return reject(new BadRequest('Main undefined'))
+        }
 
-      } catch (err) {
-        return reject(err.code === 'ENOENT' ? new NotFound('Main not found') :
-          err instanceof SyntaxError ? new BadRequest('Main bad formatted') : err)
+      } catch (/** @type {any} */ err) {
+        return reject(
+          err.code === 'ENOENT' ?
+            new NotFound('Main not found') :
+            err instanceof SyntaxError ?
+              new BadRequest('Main bad formatted') :
+              err
+        )
       }
       
       resolve([cfgs[appjson], _dirname, url, appname])
     }).then(([main, dirname, url, appname]) => {
       try { 
-        new (require(join(dirname, main)))({ req, res, cwd, etc, appname, dirname, url, NODE_ENV });
+        new (require(join(dirname, main)))({ 
+          req, 
+          res, 
+          cwd, 
+          etc, 
+          appname, 
+          dirname, 
+          url, 
+          NODE_ENV 
+        });
       }
-      catch (err) {
-logging('constructor', err.stack || err)       ;
+      catch (/** @type { any } */ err) {
+        logging('constructor', err.stack || err);
         throw err.code === 'MODULE_NOT_FOUND' ?
-          new NotFound('Service not found') : err;
+          new NotFound('Service not found') :
+          err;
       }
     }).catch(err => {
       if (!isHttpError(err)) {
@@ -99,7 +123,14 @@ logging('constructor', err.stack || err)       ;
   })
 
   return {
-    name, cwd, etc, dirname, cfgs, PORT, test, NODE_ENV,
+    name, 
+    cwd, 
+    etc, 
+    dirname, 
+    cfgs, 
+    PORT, 
+    test, 
+    NODE_ENV,
     server: test ? server : server?.listen(
       PORT, NODE_ENV === 'prod' ? undefined :
       /** @this import('net').Server */ function () {
@@ -115,7 +146,6 @@ logging('constructor', err.stack || err)       ;
         logging(
           ['-'.repeat(1 * lns.reduce((a, b) => Math.max(a, b.length), 0)), ...lns].join('\n')
         );
-
       }
     )
   }

@@ -89,9 +89,12 @@ const Router = module.exports = class {
         this.send(err);
       })
     }
-    catch (err) {
-      this.send(err.message === 'this.service is not a constructor' ?
-        new BadRequest(`Service is not a constructor`) : err);
+    catch (/** @type {any} */ err) {
+      this.send(
+        err.message === 'this.service is not a constructor' ?
+          new BadRequest(`Service is not a constructor`) :
+          err
+      );
     }
   }
 

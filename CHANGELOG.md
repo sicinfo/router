@@ -1,5 +1,9 @@
 # sicinfo-router
 
+## [0.2.0] 
+### Changes
+- 
+
 
 ## release: 0.1.2
 - altera localização para os diretorio ___dirname___ e ___etc___

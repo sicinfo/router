@@ -22,15 +22,22 @@ const logging = (process.env.NODE_ENV?.toLowerCase().slice(0, 4) === 'prod') ?
     return (/** @type {string|number} */ ind, /** @type {[...string]} */ ...args) => {
       if (name) {
         let _log = console.log;
-        if (args.length == 1 && typeof (args[0]) === 'function')
-          try { args = [args[0]()] }
-          catch (err) { [_log, args] = [console.warn, Object.entries(err)] }
+        if (args.length == 1 && typeof (args[0]) === 'function') {
+          try { 
+            args = [args[0]()] 
+          }
+          catch (/** @type {any} */ err) { 
+            _log = console.warn;
+            args = Object.entries(err);
+          }
+        }
         _log([name].concat(args).map((c, i) => `${i ? '-' : ind} ${c}`).join('\n'));
       }
       return exports;
     }
   }
 
+// @ts-ignore
 const { etc } = require('./gate')(process.env);
 
 exports.etc = etc;

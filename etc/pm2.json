@@ -1,11 +1,11 @@
 {
-  "name": "router",
-  "version": "1.0.0",
-  "description": "pm2 start loja ",
+  "name": "sicinfo-router",
+  "version": "0.1.0",
+  "description": "pm2 start",
   "interpreter": "node",
   "max_restarts": 4,
   "interpreter_args": "",
-  "cwd": "/home/user/var/work/router",
+  "cwd": "/var/node_apps/router",
   "script": "src/index.js",
   "watch": ["dist", "src"],
   "ignore_watch": [
@@ -15,7 +15,7 @@
     "**/tmp/*"
   ],
   "env": {
-    "etc": "/home/user/var/work/etc",
+    "etc": "/var/node_apps/etc",
     "PORT": 3003,
     "NODE_ENV": "development"
   }
