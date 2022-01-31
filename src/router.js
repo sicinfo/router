@@ -5,24 +5,11 @@
  */
 'use strict';
 
-/* @typedef { import('./index').AttributesTypes } AttributesTypes */
-/* @typedef { import('./index').Attributes } Attributes */
-/* @typedef { import('./index').RouterResponse } RouterResponse */
-/* @typedef { import('./index').Ctx } Ctx */
-/* @typedef { import('http').IncomingHttpHeaders } IncomingHttpHeaders */
-/* @typedef { import('querystring').ParsedUrlQuery } ParsedUrlQuery */
-/* @typedef { import('./auth').Token } AuthToken */
-
-
-const {
-  ContentType,
-  TypeTextPlain,
-  TypeApplicationJson,
-  logging
-} = require('./index')(__filename);
-
-const { join } = require('path');
+const { readFileSync } = require('fs');
+const _statuses = require('statuses');
+const { join: pathJoin } = require('path');
 const qs = require('querystring');
+const Auth = require('./auth');
 
 const {
   BadRequest,
@@ -32,30 +19,27 @@ const {
   ServiceUnavailable
 } = require('http-errors');
 
-const _statuses = require('statuses');
-const { empty } = _statuses;
-const statuses = (/** @type {string} */ b) => /** @type {number} */(_statuses(b));
+const {
+  ContentType,
+  TypeTextPlain,
+  TypeApplicationJson,
+  logging
+} = require('./index')(__filename);
 
-const Auth = require('./auth');
-const { readFileSync } = require('fs');
+const { empty: statusesEmpty } = _statuses;
+
+const statuses = (/** @type {string} */ b) => {
+  return 1 * /** @type {number} */ (_statuses(b));
+}
 
 const Router = module.exports = class {
 
-  /** 
-   * @typedef Options
-   * @property { Attributes } [body]
-   * @property { string } dirservices
-   * @property { Record<string, any> } req
-   * @property { Record<string, any> } res
-   * @property { import('./service') } [service]
-   * @property { import('./service') } [Service]
-   * @property { Token } [authorization]
-   * @property { IncomingHttpHeaders } [headers]
-   * @property { ParsedUrlQuery } [query]
-   */ 
-  /** @arg { Ctx & Options? } ctx */
+  /** @arg { Ctx & RouterOptions? } ctx */
   constructor(ctx) {
-    /** @readonly @private */ 
+    /** 
+     * @readonly 
+     * @private 
+     */ 
     this.ctx = Object.assign({ req: {}, res: {} }, ctx);
    
     try {
@@ -88,8 +72,8 @@ const Router = module.exports = class {
       }).catch(err => {
         this.send(err);
       })
-    }
-    catch (/** @type {any} */ err) {
+    
+    } catch (/** @type {any} */ err) {
       this.send(
         err.message === 'this.service is not a constructor' ?
           new BadRequest(`Service is not a constructor`) :
@@ -119,10 +103,15 @@ const Router = module.exports = class {
     return this.Auth.validate(headers, required)
   }
 
-  /** @arg { RouterResponse | string } arg */
+  /** 
+   * @arg { RouterResponse | string } arg 
+   */
   send(arg) {
-    //@ts-ignore
-    logging('send', arg?.tracer || arg && JSON.stringify(arg));
+
+    logging('send', arg && (
+      (/** @type {any} */ (arg)).tracer ||
+      JSON.stringify(arg)
+    ));
 
     const { res } = this.ctx;
     if (!res.writeHead) return
@@ -135,7 +124,7 @@ const Router = module.exports = class {
     const isString = [data, message].some(a => typeof (a) === 'string');
 
     if (!status) status = statuses(isError ? 'Bad Request' : !data ? 'No Content' : 'Ok')
-    if (empty[status]) [data, message] = [undefined, undefined]
+    if (statusesEmpty[status]) [data, message] = [undefined, undefined]
 
     if (!!data && !headers[ContentType]) headers[ContentType] = isString ? TypeTextPlain : TypeApplicationJson;
     else if (!data && !!message) data = message;
@@ -154,11 +143,12 @@ const Router = module.exports = class {
       while (_url.length && !service) {
         const _name = _url.pop();
         if (!_name) continue;
-        const dirServices = join(this.dirservices, ..._url);
 
-        if (isNaN(parseInt(_name))) try { service = require(join(dirServices, `${_name}-service`)) }
+        const dirServices = pathJoin(this.dirservices, ..._url);
+
+        if (isNaN(parseInt(_name))) try { service = require(pathJoin(dirServices, `${_name}-service`)) }
           catch (err) {
-            if (url[0]) try { service = require(join(dirServices, `${_name}-service`, `${url[0]}-service`)) }
+            if (url[0]) try { service = require(pathJoin(dirServices, `${_name}-service`, `${url[0]}-service`)) }
               catch (err) { }
           }
 
@@ -191,11 +181,15 @@ const Router = module.exports = class {
   }
 
   get dirservices() {
-    return this.ctx.dirservices || (this.ctx.dirservices = join(this.dirname, 'services'))
+    return this.ctx.dirservices || (
+      this.ctx.dirservices = pathJoin(this.dirname, 'services')
+    )
   }
 
   get headers() {
-    return this.ctx.headers || (this.ctx.headers = this.ctx.req.headers || {})
+    return this.ctx.headers || (
+      this.ctx.headers = this.ctx.req.headers || {}
+    )
   }
 
   get method() {
@@ -251,7 +245,7 @@ logging('DbOptions------------------------',
     try {
       return JSON.parse(
         readFileSync(
-          join(
+          pathJoin(
             this.ctx.etc,
             `db-${this.ctx.appname}.json`
           )

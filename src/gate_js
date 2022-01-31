@@ -5,24 +5,10 @@
  * 
  */
 /* eslint-env: es2020 */
-/** 
- * @typedef GateEnv
- * @property {string} [cwd]
- * @property {string} [PWD]
- * @property {string} [PORT]
- * @property {string} [watch]
- * @property {string} [name='']
- * @property {string} [etc='etc']
- * @property {string} [dirname='']
- * @property {boolean} [test=false]
- * @property {Http.Server} [server]
- * @property {Record<string,string>} [cfgs={}]
- * @property {string} [NODE_ENV='development']
- * @property {(...a:[...any]) => void } [logging]
- */ 
+
 'use strict';
 
-const { join } = require('path')
+const { pathJoin: join } = require('path')
 const { readFileSync, statSync } = require('fs');
 
 const Http = require('http');

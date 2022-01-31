@@ -1,5 +1,7 @@
+
 /** @typedef { import('jsonwebtoken').SignOptions } SignOpts */
 /** @typedef { import('http').IncomingHttpHeaders } IncomingHttpHeaders */
+/** @typedef { import('http').Server } HttpServer */
 /** @typedef { import('querystring').ParsedUrlQuery } ParsedUrlQuery */
 
 /**
@@ -45,21 +47,53 @@
 /** @typedef {Record<string, AttributesTypes>} Attributes */
 
 /** @typedef {import('../src/router')} Router */
+/** @typedef {import('../src/service')} Service */
 
 /**
  * @typedef Ctx
- * @property {string} etc
- * @property {string[]} [url]
  * @property {string} appname
- * @property {string} [dirname]
+ * @property {string} etc
  * @property {string} NODE_ENV
- * @property {import('../src/service')} [Service]
- * @property {import('http').ServerResponse} [res]
  * @property {import('http').IncomingMessage} [req]
- */ /**
+ * @property {import('http').ServerResponse} [res]
+ * @property {string[]} [url]
+ * @property {string} [dirname]
+ * @property {Service} [Service]
+ */ 
+
+/**
  * @typedef RouterResponse
  * @property { number } [status]
  * @property { Attributes|string } [data]
  * @property { Attributes|string } [message]
  * @property { import('http').OutgoingHttpHeaders } [headers]
  */ 
+
+/** 
+ * @typedef GateEnv
+ * @property {string} [cwd]
+ * @property {string} [PWD]
+ * @property {string} [PORT]
+ * @property {string} [watch='dist']
+ * @property {string} [name='']
+ * @property {string} [etc='etc']
+ * @property {string} [dirname='']
+ * @property {boolean} [test=false]
+ * @property {HttpServer} [server]
+ * @property {Record<string,string>} [cfgs={}]
+ * @property {string} [NODE_ENV='development']
+ * @property {(...a:[...any]) => void } [logging]
+ */ 
+
+  /** 
+   * @typedef RouterOptions
+   * @property { Attributes } [body]
+   * @property { string } dirservices
+   * @property { Record<string, any> } req
+   * @property { Record<string, any> } res
+   * @property { Service } [service]
+   * @property { Service } [Service]
+   * @property { Token } [authorization]
+   * @property { IncomingHttpHeaders } [headers]
+   * @property { ParsedUrlQuery } [query]
+   */ 
