@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/sicinfo/router/issues"
   },
-  "homepage": "https://github.com/sicinfo/router#readme"
+  "homepage": "https://github.com/sicinfo/router#readme",
+  "user": {
+    "name": "moreira",
+    "email": "moreiraxx+github-router@gmail.com"
+  }
+
 }
