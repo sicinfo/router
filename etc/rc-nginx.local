@@ -2,15 +2,15 @@
 #
 # rc.local
 
+[ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
+
 function _pm2 {
+  
   [[ $1 =~ ^((re)?start|stop)$ ]] || exit 0
 
   # verifica se o pms está instalado
   local PM2=$(which pm2)
-  if [ -z $PM2 ] && {
-
-  }
-  if [ -x $PM2 ] || exit 0
+  [ -x $PM2 ] || exit 0
 
   # cancela todas instances pm2
   [ $1 == stop ] && $PM2 -s kill && exit 0
@@ -27,16 +27,12 @@ function _pm2 {
     local NAME=$(cut -d\" -f4 <<< $(grep name $JSON))
     local PID=$($PM2 pid $NAME)
 
-
-
-    iniciar 
     if [[ $1 == start && -z $PID ]]; then $PM2 $1 $JSON
-    elif [ $1 == restart ]
-      then $PM2 $1 $NAME
+    elif [ $1 == restart ]; then $PM2 $1 $NAME
     fi
   done
 }
 
-_pm2 $1
+[ -z $1 ] || _pm2 $1
 
 exit 0
