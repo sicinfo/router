@@ -19,6 +19,9 @@
   "user": {
     "name": "moreira",
     "email": "moreiraxx+github-router@gmail.com"
+  },
+  "dependencies": {
+    "http-errors": "^2",
+    "jsonwebtoken": "^8"
   }
-
 }
