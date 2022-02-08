@@ -34,50 +34,79 @@ module.exports = class Service {
                 Promise.reject(new MethodNotAllowed());
   }
 
-  /** @return { Promise<RouterResponse> } */
-  doGet(/** @type {unknown} */ options) {
-    return this.id ? this.doGetById(options) :
-      this.doc ? this.doGetByDoc(options) :
+  /** 
+   * @param {unknown} [options]
+   * @return {Promise<RouterResponse>}
+   */
+  doGet(options) {
+    return this.id ? this.doGetById(this.id, options) :
+      this.doc ? this.doGetByDoc(this.doc, options) :
         this.doGetByQuery(options);
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doGetById(/** @type {unknown} */ options) {
+  /**
+   * @param {string} id
+   * @param {unknown} [options]
+   * @return {Promise<RouterResponse>} 
+   */
+  doGetById(id, options) {
     throw new MethodNotAllowed('Method GetById Not Allowed');
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doGetByDoc(/** @type {unknown} */ options) {
+  /**
+   * @param {Record<string,string>} doc
+   * @param {unknown} [options]
+   * @return {Promise<RouterResponse>} 
+   */
+  doGetByDoc(doc, options) {
     throw new MethodNotAllowed('Method GetByDoc Not Allowed');
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doGetByQuery(/** @type {unknown} */ options) {
+  /** 
+   * @param {unknown} [options]
+   * @return {Promise<RouterResponse>}
+   */
+  doGetByQuery(options) {
     throw new MethodNotAllowed('Method GetByQuery Not Allowed');
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doOptions(/** @type {unknown} */ options) {
+  /** 
+ * @param {unknown} [options]
+ * @return {Promise<RouterResponse>}
+ */
+  doOptions(options) {
     throw new MethodNotAllowed('Method Options Not Allowed');
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doDelete(/** @type {unknown} */ options) {
+  /** 
+   * @param {unknown} [options]
+   * @return {Promise<RouterResponse>}
+   */
+  doDelete(options) {
     throw new MethodNotAllowed('Method Delete Not Allowed');
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doPatch(/** @type {unknown} */ options) {
+  /** 
+ * @param {unknown} [options]
+ * @return {Promise<RouterResponse>}
+ */
+  doPatch(options) {
     throw new MethodNotAllowed('Method Patch Not Allowed');
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doPost(/** @type {unknown} */ options) {
+  /** 
+ * @param {unknown} [options]
+ * @return {Promise<RouterResponse>}
+ */
+  doPost(options) {
     throw new MethodNotAllowed('Method Post Not Allowed');
   }
 
-  /** @return {Promise<RouterResponse>} */
-  doPut(/** @type {unknown} */ options) {
+  /** 
+ * @param {unknown} [options]
+ * @return {Promise<RouterResponse>}
+ */
+  doPut(options) {
     throw new MethodNotAllowed('Method Put Not Allowed');
   }
 
@@ -86,7 +115,7 @@ module.exports = class Service {
   }
 
   get doc() {
-    return false;
+    return undefined;
     // return this.router[this.router.isPatchOrPostOrPutMethod ? 'body' : 'query']?.doc$;
   }
 
