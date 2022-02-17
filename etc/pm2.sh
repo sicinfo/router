@@ -3,8 +3,6 @@
 # incluir no arquivo rc.local
 # source ./pm2.sh
 
-echo $HOME
-
 [ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
 
 function _pm2 {
@@ -13,7 +11,7 @@ function _pm2 {
 
   # verifica se o pms está instalado
   local PM2=$(which pm2)
-  [ -x $PM2 ] || exit 0
+  [ -z $PM2 ] || [ ! -x $PM2 ] && exit 0
 
 echo $PM2 - teste
 
