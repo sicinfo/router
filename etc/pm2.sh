@@ -7,8 +7,8 @@ function _pm2 {
 
   [ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
 
-  echo $NVM_DIR
-  
+  echo $HOME
+
   [ -z $NVM_DIR ] && exit 0  
   
   [[ $1 =~ ^((re)?start|stop)$ ]] || exit 0
