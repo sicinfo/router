@@ -14,7 +14,7 @@ function _pm2 {
   [ -x $PM2 ] || exit 0
 
   # cancela todas instances pm2
-  [ $1 = stop ] && $PM2 -s kill && exit 0
+  [ stop = $1 ] && $PM2 -s kill && exit 0
 
   # verifica diretorio local
   local APPS="$HOME/etc/pm2"
