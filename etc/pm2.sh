@@ -13,6 +13,8 @@ function _pm2 {
   local PM2=$(which pm2)
   [ -x $PM2 ] || exit 0
 
+echo $PM2
+
   # cancela todas instances pm2
   [ stop = $1 ] && $PM2 -s kill && exit 0
 
