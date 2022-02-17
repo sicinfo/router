@@ -13,7 +13,7 @@ function _pm2 {
   [ -x $PM2 ] || exit 0
 
   # cancela todas instances pm2
-  [ $1 == stop ] && $PM2 -s kill && exit 0
+  [ $1 = stop ] && $PM2 -s kill && exit 0
 
   # verifica diretorio local
   local APPS="$HOME/etc/pm2"
@@ -22,13 +22,13 @@ function _pm2 {
   # iniciar pm2
   $PM2 -s ping
 
-  for JSON in $(ls $APPS/*.json 2> /dev/null); do
+  for JSON in $(ls $APPS/*.json 2>&-); do
 
     local NAME=$(cut -d\" -f4 <<< $(grep name $JSON))
     local PID=$($PM2 pid $NAME)
 
-    if [[ $1 == start && -z $PID ]]; then $PM2 $1 $JSON
-    elif [ $1 == restart ]; then $PM2 $1 $NAME
+    if [[ $1 = start && -z $PID ]]; then $PM2 $1 $JSON
+    elif [ $1 = restart ]; then $PM2 $1 $NAME
     fi
   done
 }
