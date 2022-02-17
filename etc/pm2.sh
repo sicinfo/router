@@ -3,15 +3,9 @@
 # incluir no arquivo rc.local
 # source ./pm2.sh
 
+[ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
+
 function _pm2 {
-
-  [ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
-
-  [ -s $HOME/.nvm/nvm.sh ] || echo nao tem nvm
-  echo "$NVM_DIR"
-
-  [ -z $NVM_DIR ] && exit 0  
-  
   [[ $1 =~ ^((re)?start|stop)$ ]] || exit 0
 
   # verifica se o pms está instalado
