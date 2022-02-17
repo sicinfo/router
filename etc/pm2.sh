@@ -8,6 +8,7 @@ function _pm2 {
   [ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
 
   echo "[ -s $HOME/.nvm/nvm.sh ]"
+  echo "$NVM_DIR"
 
   [ -z $NVM_DIR ] && exit 0  
   
