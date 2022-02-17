@@ -33,6 +33,6 @@ function _pm2 {
   done
 }
 
-[ -z $1 ] || _pm2 $1
+#[ -z $1 ] || _pm2 $1
 
-exit 0
+#exit 0
