@@ -3,6 +3,11 @@
  * 
  * powered by moreira - 2020-11-21
  * 
+ * @author moreira
+ * @version 0.1.1
+ * 
+ * updated 2022.02.17
+ * -
  */
 'use strict';
 
