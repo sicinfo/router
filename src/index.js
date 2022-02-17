@@ -49,7 +49,7 @@ const gate = ({
   dirname = '',
   cfgs = {},
   PORT, PWD,
-  watch = "dist",
+  watch = '',
   server,
   test = false,
   logging = (/** @type {...any} */ ...args) => { 
@@ -79,6 +79,7 @@ const gate = ({
   if (!cwd) cwd = PWD || __dirname
   if (!etc) etc = cwd;
   if (!dirname) dirname = cwd;
+  if (!watch) watch = pathJoin(dirname, 'dist');
 
   if (!server) server = Http.createServer((req, res) => {
 
@@ -90,7 +91,7 @@ const gate = ({
       if (!appname) return reject(new BadRequest('App undefined'));
       if (/\./.test(appname)) return res.writeHead(204).end();
       
-      const _dirname = pathJoin(dirname, watch.split(',')[0], `app-${appname}`);
+      const _dirname = pathJoin(watch.split(',')[0], `app-${appname}`);
       const appjson = pathJoin(etc, `app-${appname}.json`);
 
       if (!cfgs[appjson]) try {

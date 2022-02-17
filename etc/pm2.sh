@@ -1,6 +1,7 @@
 #! /bin/bash -e
 #
-# rc.local
+# incluir no arquivo rc.local
+# source ./pm2.sh
 
 [ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
 
