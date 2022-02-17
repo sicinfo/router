@@ -82,9 +82,9 @@ const gate = ({
 
   NODE_ENV = NODE_ENV.slice(0, 4)
   if (!cwd) cwd = PWD || __dirname
-  if (!etc) etc = cwd;
   if (!dirname) dirname = cwd;
   if (!watch) watch = pathJoin(dirname, 'dist');
+  if (!etc) etc = pathJoin(watch, '..', 'etc');;
 
   if (!server) server = Http.createServer((req, res) => {
 
