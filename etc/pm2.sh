@@ -3,6 +3,8 @@
 # incluir no arquivo rc.local
 # source ./pm2.sh
 
+echo $HOME
+
 [ -z $NVM_DIR ] && [ -s $HOME/.nvm/nvm.sh ] && \. $HOME/.nvm/nvm.sh
 
 function _pm2 {
