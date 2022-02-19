@@ -96,8 +96,8 @@ const gate = ({
       if (!appname) return reject(new BadRequest('App undefined'));
       if (/\./.test(appname)) return res.writeHead(204).end();
       
-      const _dirname = pathJoin(watch.split(',')[0], `app-${appname}`);
-      const appjson = pathJoin(etc, `app-${appname}.json`);
+      const _dirname = pathJoin(watch.split(',')[0], `${appname}-app`);
+      const appjson = pathJoin(etc, `${appname}-app.json`);
 
       if (!cfgs[appjson]) try {
 

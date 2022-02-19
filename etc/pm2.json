@@ -7,7 +7,7 @@
   "interpreter_args": "",
   "cwd": "/var/node_apps/router",
   "script": "src/index.js",
-  "watch": ["dist", "src"],
+  "watch": ["/var/node_apps/dist", "src"],
   "ignore_watch": [
     "**/*.json",
     "**/* copy*",
@@ -16,7 +16,7 @@
   ],
   "env": {
     "etc": "/var/node_apps/etc",
-    "PORT": 3003,
+    "PORT": 3004,
     "NODE_ENV": "development"
   }
 }
