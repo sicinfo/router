@@ -11,27 +11,23 @@ function _pm2 {
 
   # verifica se o pms está instalado
   local PM2=$(which pm2)
-  [ -z $PM2 ] || [ ! -x $PM2 ] && return 
+  [ ! -z $PM2 ] && [ -x $PM2 ] || return 
 
   # cancela todas instances pm2
-  [ stop = $1 ] && $PM2 -s kill && return 
+  [ kill = $1 ] && $PM2 -s kill && return 
 
-  # verifica diretorio local
+  # verifica diretorio local e iniciar o pm2
   local APPS="$(dirname $0)/pm2.d"
-  [ -d $APPS ] || return 
-
-  # iniciar pm2
-  $PM2 -s ping
+  [ -d $APPS ] && $PM2 -s ping || return 
 
   for JSON in $(ls $APPS/*.json 2>&-); do
 
     local NAME=$(cut -d\" -f4 <<< $(grep name $JSON))
-    local PID=$($PM2 pid $NAME)
+    [ restart = $1 ] && $PM2 -s restart $NAME && continue
 
-    if [[ $1 = start && -z $PID ]]; then $PM2 $1 $JSON
-    elif [ $1 = restart ]; then $PM2 $1 $NAME
-    fi
-  
+    local PID=$($PM2 pid $NAME)
+    [ stop = $1 ] && [ ${PID}0 -gt 0 ] && $PM2 -s stop $NAME && continue
+    [ start = $1 ] && [ -z $PID ] && $PM2 -s start $JSON 
   done
 
   return
