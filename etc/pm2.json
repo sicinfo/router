@@ -1,0 +1,22 @@
+{
+  "name": "sicinfo-router",
+  "version": "0.1.0",
+  "description": "pm2 start",
+  "interpreter": "node",
+  "max_restarts": 4,
+  "interpreter_args": "",
+  "cwd": "/var/node_apps/router",
+  "script": "src/index.js",
+  "watch": ["/var/node_apps/dist", "src"],
+  "ignore_watch": [
+    "**/*.json",
+    "**/* copy*",
+    "**/node_modules",
+    "**/tmp/*"
+  ],
+  "env": {
+    "etc": "/var/node_apps/etc",
+    "PORT": 3004,
+    "NODE_ENV": "development"
+  }
+}

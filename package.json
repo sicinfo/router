@@ -1,0 +1,27 @@
+{
+  "name": "sicinfo-router",
+  "version": "0.1.0",
+  "description": "application loaders",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sicinfo/router.git"
+  },
+  "author": "Moreira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sicinfo/router/issues"
+  },
+  "homepage": "https://github.com/sicinfo/router#readme",
+  "user": {
+    "name": "moreira",
+    "email": "moreiraxx+github-router@gmail.com"
+  },
+  "dependencies": {
+    "http-errors": "^2",
+    "jsonwebtoken": "^8"
+  }
+}

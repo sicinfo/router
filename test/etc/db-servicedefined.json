@@ -1,0 +1,8 @@
+{
+  "database": {
+    "dialect": {
+      "username": "username",
+      "password": "password"
+    }
+  }
+}
