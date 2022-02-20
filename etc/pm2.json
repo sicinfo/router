@@ -5,9 +5,9 @@
   "interpreter": "node",
   "max_restarts": 4,
   "interpreter_args": "",
-  "cwd": "/var/node_apps/router",
-  "script": "src/index.js",
-  "watch": ["/var/node_apps/dist", "src"],
+  "cwd": "/var/node_apps/dist/router",
+  "script": "index.js",
+  "watch": ["/var/node_apps/dist"],
   "ignore_watch": [
     "**/*.json",
     "**/* copy*",
