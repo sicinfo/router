@@ -26,8 +26,8 @@ function _pm2 {
     [ restart = $1 ] && $PM2 -s restart $NAME && continue
 
     local PID=$($PM2 pid $NAME)
-    [ stop = $1 ] && [ ${PID}0 -gt 0 ] && $PM2 -s stop $NAME && continue
-    [ start = $1 ] && [ -z $PID ] && $PM2 -s start $JSON 
+    [ stop = $1 ] && [ ${PID}0 -gt 0 ] && $PM2 stop $NAME && continue
+    [ start = $1 ] && [ -z $PID ] && $PM2 start $JSON 
   done
 
   return
