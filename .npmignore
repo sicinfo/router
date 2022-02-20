@@ -1,0 +1,5 @@
+test
+typings
+.gitignore
+jsconfig.json
+*.code-workspace
